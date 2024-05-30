@@ -2,6 +2,6 @@ package com.example.tfliteimageclassifer.domain
 
 import android.graphics.Bitmap
 
-interface ImageClassifier {
+interface BirdsClassifier {
     fun classify(bitmap: Bitmap, rotation: Int): List<Classification>
 }
