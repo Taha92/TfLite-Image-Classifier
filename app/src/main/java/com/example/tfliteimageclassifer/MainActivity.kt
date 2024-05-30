@@ -1,5 +1,7 @@
 package com.example.tfliteimageclassifer
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.tfliteimageclassifer.data.TfLiteBirdsClassifier
 import com.example.tfliteimageclassifer.domain.Classification
@@ -38,6 +41,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        if (!hasCameraPermission()) {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA), 0
+            )
+        }
         setContent {
             Scaffold(
                 content = { padding ->
@@ -119,4 +127,8 @@ class MainActivity : ComponentActivity() {
             )
         }
     }
+
+    private fun hasCameraPermission() = ContextCompat.checkSelfPermission(
+        this, Manifest.permission.CAMERA
+    ) == PackageManager.PERMISSION_GRANTED
 }
